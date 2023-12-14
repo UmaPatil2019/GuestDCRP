@@ -1,0 +1,9 @@
+#this file requirements.txt installs all the packages/plug ins mentioned in this file all at one go
+pytest
+selenium
+openpyxl
+webdriver-manager
+pytest-html
+pytest-xdist
+allure-pytest
+

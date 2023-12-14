@@ -1,0 +1,8 @@
+12/12/2023 09:41:34 AM:INFO:====== WebDriver manager ======
+12/12/2023 09:41:34 AM:INFO:Get LATEST chromedriver version for google-chrome
+12/12/2023 09:41:34 AM:INFO:Get LATEST chromedriver version for google-chrome
+12/12/2023 09:41:34 AM:INFO:Driver [/Users/maheshpatil/.wdm/drivers/chromedriver/mac64/120.0.6099.71/chromedriver-mac-arm64/chromedriver] found in cache
+12/12/2023 09:41:36 AM:INFO:**** Continue as a Guest ****
+12/12/2023 09:41:39 AM:INFO:****What's new modal****
+12/12/2023 09:41:46 AM:INFO:logged in as guest
+12/12/2023 09:41:46 AM:ERROR:****Logging out Guest Account****
