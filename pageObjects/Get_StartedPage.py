@@ -10,19 +10,19 @@ class getstartedPage():
 
 
     def __init__(self, driver):
-        self.driver = driver
+        self.driver = driver #this driver is coming from test_login
 
     #method to go to IG
     def clickIG(self):
         wait = WebDriverWait(self.driver, 10)
         wait.until(EC.element_to_be_clickable((By.XPATH, self.IG_xpath))).click()
 
-    #method to go to empty plan modal
+    #action method to go to empty plan modal
     def clickEmptyPlan(self):
         wait = WebDriverWait(self.driver, 10)
         wait.until(EC.element_to_be_clickable((By.XPATH, self.Empty_plan_xpath))).click()
 
-    #method to go to Portfolio
+    #action method to go to Portfolio
     def clickPortfolio(self):
         wait = WebDriverWait(self.driver, 10)
         wait.until(EC.element_to_be_clickable((By.XPATH, self.My_Portfolio_xpath))).click()

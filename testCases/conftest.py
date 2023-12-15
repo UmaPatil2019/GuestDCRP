@@ -1,37 +1,66 @@
 import os.path
+import time
 
 import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 from datetime import datetime
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
-@pytest.fixture(autouse=True) #applicable for all the packages/functions
-def setup():
+
+# conftest file has data of most commony used. Optimization/code reusability
+# This setup fixture is designed to perform some common setup steps that are applicable to all test cases in your suite.
+# the driver and wait instances available to all the test methods within the test class. This is beneficial because it allows you to reuse the same WebDriver instance across multiple test methods, avoiding the overhead of creating a new WebDriver for each test method.
+# removed get_application_url method from readProperties.py and added here
+@pytest.fixture(autouse=True)  # applicable for all the packages/functions
+def setup(
+        request):  # Use request when need to declare variables like wait, driver. The request object is automatically available in the context of a fixture function in Pytest. It provides information and methods related to the executing test.
+    wait_time_out = 5
+    ## It initiates chrome webdriver,This line sets up a Chrome WebDriver using the webdriver_manager package to manage the ChromeDriver. It automatically downloads and installs the appropriate version of ChromeDriver.
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-    return driver
+    wait = WebDriverWait(driver, wait_time_out)
+    # This line navigates the WebDriver to the specified URL
+    driver.get("https://designcrew-roomplanner-we.outwardinc.com/splash")
+    # Waiting for Continue as guest Button and Clicking:
+    wait.until(EC.presence_of_element_located(
+        (By.XPATH, "//form[@class='login-form guest visible']//button[@class='login-item guest-button']"))).click()
+    time.sleep(5)
+    driver.maximize_window()
+    # setting up request context. These lines make the driver and wait instances available in the context of the test class.
+    request.cls.driver = driver  # assigns the WebDriver instance to the driver attribute of the test class.
+    request.cls.wait = wait  # assigns the WebDriverWait instance to the wait attribute of the test class.
+    yield
+    # Teardown - Quitting WebDriver:
+    driver.quit()
 
-#to generate HTML reports add the following hook methods
+
+# to generate HTML reports add the following hook methods
 @pytest.mark.optionalhook()
 def pytest_configure(config):
     config._metadata['Project Name'] = 'GUEST DCRP'
     config._metadata['Module Name'] = 'Login Module'
     config._metadata['Tester Name'] = 'Uma'
 
-#It's hook to delete/modift environment info to html report
+
+# It's hook to delete/modift environment info to html report
 @pytest.mark.optionalhook
 def pytest_metadata(metadata):
     metadata.pop("JAVA_Home", None)
     metadata.pop("Plugins", None)
 
+
 # specifying report folder location and save report with timestamp
-#this avoids sending the html command in terminal everytiome
+# this avoids sending the html command in terminal everytiome
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure(config):
-    config.option.htmlpath = os.path.abspath(os.curdir) + "/reports/" + datetime.now().strftime("%d-%m-%Y %H-%M-%S")+".html"
+    config.option.htmlpath = os.path.abspath(os.curdir) + "/reports/" + datetime.now().strftime(
+        "%d-%m-%Y %H-%M-%S") + ".html"
 
 # .......
-#TO test in multiple browser use the following code and run in command line as
+# TO test in multiple browser use the following code and run in command line as
 #
 # @pytest.fixture()
 # def setup(browser):
@@ -117,12 +146,9 @@ def pytest_configure(config):
 # Make sure to replace /path/to/safaridriver with the actual path to the Safari WebDriver executable on your system.
 
 
-#.......
+# .......
 # For testing in specific browser, use following command
 # pytest -v -s ./testCases/test_LoginASGuest.py --browser chrome
 
-#For parallel testing, use following command
+# For parallel testing, use following command
 # pytest -v -s -n=3 ./testCases/test_LoginASGuest.py --browser chrome
-
-
-

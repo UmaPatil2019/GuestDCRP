@@ -9,9 +9,16 @@ config = configparser.RawConfigParser()
 config.read(os.path.abspath(os.curdir)+'/configurations/config.ini')
 
 class ReadConfig:
+
     @staticmethod
-    def getApplicationURL():
-        #confg object gets commonInfo data and stores here
-        url = config.get('commonInfo', 'baseURL')
-        return url
+    def add_skus():
+        try:
+            skus = config.get('commonInfo', 'skus')
+            return skus
+
+        except Exception as e:
+            print(f"Error getting skus, skus may be unavailable: {e}")
+            return []
+
+
 

@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
+from utilities.readProperties import ReadConfig
 
 class myPortfolio():
     #locators for edit-> NewPlan -> New Plan modal header msg in Portfolio
@@ -51,7 +52,7 @@ class myPortfolio():
 
     def addskus_in_CreateNewPlan(self):
         Add_skus_inNewPlan = self.driver.find_element(By.XPATH, self.add_skus)
-        return Add_skus_inNewPlan.send_keys("3531930,404040")
+        return Add_skus_inNewPlan.send_keys(ReadConfig.add_skus())
 
     def create_newPlan(self):
         self.driver.find_element(By.XPATH, self.create_button).click()
