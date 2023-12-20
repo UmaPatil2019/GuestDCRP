@@ -9,6 +9,7 @@ from datetime import datetime
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from base.base_driver import BaseDriver
 
 
 # conftest file has data of most commony used. Optimization/code reusability
@@ -17,21 +18,26 @@ from selenium.webdriver.common.by import By
 # removed get_application_url method from readProperties.py and added here
 @pytest.fixture(autouse=True)  # applicable for all the packages/functions
 def setup(
-        request):  # Use request when need to declare variables like wait, driver. The request object is automatically available in the context of a fixture function in Pytest. It provides information and methods related to the executing test.
-    wait_time_out = 5
+        request):
+
+
+    # Use request when need to declare variables like wait, driver. The request object is automatically available in the context of a fixture function in Pytest. It provides information and methods related to the executing test.
+    #wait_time_out = 5
     ## It initiates chrome webdriver,This line sets up a Chrome WebDriver using the webdriver_manager package to manage the ChromeDriver. It automatically downloads and installs the appropriate version of ChromeDriver.
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-    wait = WebDriverWait(driver, wait_time_out)
+    wait = WebDriverWait(driver, 10)
     # This line navigates the WebDriver to the specified URL
     driver.get("https://designcrew-roomplanner-we.outwardinc.com/splash")
-    # Waiting for Continue as guest Button and Clicking:
-    wait.until(EC.presence_of_element_located(
-        (By.XPATH, "//form[@class='login-form guest visible']//button[@class='login-item guest-button']"))).click()
-    time.sleep(5)
     driver.maximize_window()
+    # Waiting for Continue as guest Button and Clicking:
+    wait.until(EC.presence_of_element_located((By.XPATH, "//form[@class='login-form guest visible']//button[@class='login-item guest-button']"))).click()
+    time.sleep(5)
+    # Waiting to click Continue to RP button in what's new in RP mpdal"
+    wait.until(EC.presence_of_element_located((By.XPATH, "//button[text()='Continue to room planner']"))).click()
     # setting up request context. These lines make the driver and wait instances available in the context of the test class.
     request.cls.driver = driver  # assigns the WebDriver instance to the driver attribute of the test class.
     request.cls.wait = wait  # assigns the WebDriverWait instance to the wait attribute of the test class.
+
     yield
     # Teardown - Quitting WebDriver:
     driver.quit()
@@ -45,7 +51,7 @@ def pytest_configure(config):
     config._metadata['Tester Name'] = 'Uma'
 
 
-# It's hook to delete/modift environment info to html report
+# It's hook to delete/modify environment info to html report
 @pytest.mark.optionalhook
 def pytest_metadata(metadata):
     metadata.pop("JAVA_Home", None)

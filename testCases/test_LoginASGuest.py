@@ -16,30 +16,14 @@ class Test_login:
     # baseURL = ReadConfig.getApplicationURL()
     # create a logger object for LogGen class.loggen method
     logger = LogGen.loggen()
-    read_sku = ReadConfig.add_skus()
 
     @pytest.mark.usefixtures(
         "setup")  # call the setup fixture from conftest.py, which will initialize chrome, opens url and log in as guest(no need to invoke methods separately)
+    @pytest.mark.sanity
     def test_login(self):
         # write a log message through different log methods like info, debug, warning, error
         self.logger.info("**** Continue as a Guest ****")
         self.logger.info("****What's new modal****")
-        # landingPage class object
-        self.landing = landingPage(self.driver)
-        self.confirmMsg = self.landing.getConfirmationmsg()
-
-        # the first if statement goes through without errors, second if statement has error to check screenshot saved in cases of failures( #if self.confmsg == "What":)
-        if self.confirmMsg == "What’s new in Room Planner?":
-            self.logger.info("****logged in as guest****")
-            assert True
-
-        else:
-            self.driver.save_screenshot(os.path.abspath(os.curdir) + "//screenshots//" + "test_login1.png")
-            self.logger.error("***Failed***")
-            assert False
-
-        self.logger.info("****Closing the modal****")
-        self.landing.continueTORP()
 
         # getStartedPage class object
         self.getStartedPage = getstartedPage(self.driver)

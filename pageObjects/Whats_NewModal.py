@@ -28,10 +28,10 @@ class landingPage():
 
 
     #method to Continue to RP by clicking that button
-    def continueTORP(self):
-        wait = WebDriverWait(self.driver, 10)
-        continue_button = wait.until(EC.element_to_be_clickable((By.XPATH,self.continue_toRP_button_xpath)))
-        continue_button.click()
+    # def continueTORP(self):
+    #     wait = WebDriverWait(self.driver, 10)
+    #     continue_button = wait.until(EC.element_to_be_clickable((By.XPATH,self.continue_toRP_button_xpath)))
+    #     continue_button.click()
 
 
 
