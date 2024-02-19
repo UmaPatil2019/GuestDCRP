@@ -19,6 +19,7 @@ class InspirationGallery(BaseDriver):
 
         def __init__(self, driver):
             super().__init__(driver)
+            self.driver = driver
 
         def brand_filterBy(self):
             self.wait_presence_of_element_located(By.XPATH, self.brand_filter_icon_xpath).click()

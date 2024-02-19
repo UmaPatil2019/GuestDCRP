@@ -25,9 +25,9 @@ class getstartedPage():
 
 
     #action method to go to empty plan modal
-    # def clickEmptyPlan(self):
-    #     wait = WebDriverWait(self.driver, 10)
-    #     wait.until(EC.element_to_be_clickable((By.XPATH, self.Empty_plan_xpath))).click()
+    def clickEmptyPlan(self):
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.element_to_be_clickable((By.XPATH, self.Empty_plan_xpath))).click()
     #
     # #action method to go to Portfolio
     # def clickPortfolio(self):

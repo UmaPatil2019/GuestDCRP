@@ -17,8 +17,7 @@ from base.base_driver import BaseDriver
 # the driver and wait instances available to all the test methods within the test class. This is beneficial because it allows you to reuse the same WebDriver instance across multiple test methods, avoiding the overhead of creating a new WebDriver for each test method.
 # removed get_application_url method from readProperties.py and added here
 @pytest.fixture(autouse=True)  # applicable for all the packages/functions
-def setup(
-        request):
+def setup(request):
 
 
     # Use request when need to declare variables like wait, driver. The request object is automatically available in the context of a fixture function in Pytest. It provides information and methods related to the executing test.

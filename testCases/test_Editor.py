@@ -23,7 +23,7 @@ class Test_Editor:
     @pytest.mark.regression
     def test_editor(self):
         self.logger.info("**** select empty plan from Get started page ****")
-        self.get_startedPage_obj1 = getstartedPage()
+        self.get_startedPage_obj1 = getstartedPage(self.driver)
         self.get_startedPage_obj1.clickEmptyPlan()
 
         self.editor_obj2 = canvas_Editor(self.driver)
@@ -37,6 +37,7 @@ class Test_Editor:
         self.editor_obj2.select_firstItem_inSearchResults()
         time.sleep(5)
         self.editor_obj2.move_item_tocanvas()
+        time.sleep(5)
 
 
 

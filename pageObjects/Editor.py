@@ -6,8 +6,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.action_chains import ActionChains
 from utilities.readProperties import ReadConfig
-
-class canvas_Editor():
+from base.base_driver import BaseDriver
+class canvas_Editor(BaseDriver):
     # Create New Plan web elements
     plan_name_xpath = "//div[@class='CreateNewPlanModal-module__control__uPVER']//input[@id='planName']"
     add_skus = "//textarea[@id='skuList']"
@@ -24,7 +24,9 @@ class canvas_Editor():
     #source_element = "(//img[@role='img'])[1]"
 
     def __init__(self, driver):
+        super().__init__(driver)
         self.driver = driver
+
 
     # Create an empty plan
     def create_empty_plan(self):

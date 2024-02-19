@@ -20,7 +20,7 @@ class Test_InspirationGallery():
         get_startedpage_obj2 = getstartedPage(self.driver)
         get_startedpage_obj2.clickIG()
 
-        self.IG = InspirationGallery(self.driver)
-        self.IG.brand_filterBy()
+        IG = InspirationGallery(self.driver)
+        IG.brand_filterBy()
         #IG.select_brand_PB()
-        self.IG.check_each_brand()
+        IG.check_each_brand()
